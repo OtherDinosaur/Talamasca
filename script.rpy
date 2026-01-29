@@ -16,7 +16,7 @@ define fade1 = Fade(1.5, 0.5, 1.0)
 # The game starts here.
 
 label start:
-
+    
     # Show a background. This uses a placeholder by default, but you can
     # add a file (named either "bg room.png" or "bg room.jpg") to the
     # images directory to show it.
@@ -66,10 +66,26 @@ label start:
 
     l "Você está no lugar certo agora."
 
+    hide sr lobo
+    call screen interagiveis
+
+
 
 
 
 
     # This ends the game.
 
+label end:
+    "Você escalou pela janela e escapou"
     return
+
+
+
+screen interagiveis:
+    imagebutton:
+        pos (150, 200)
+        idle im.Scale("janela.png", 400, 400) 
+        hover im.Scale("janela_selecionada.png", 400, 400)
+        action Jump("end")
+        focus_mask True
