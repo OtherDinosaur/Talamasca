@@ -2,10 +2,18 @@
 
 # Declare characters used by this game. The color argument colorizes the
 # name of the character.
+define e5 = Character("Eileen", what_outlines=[( 1, "#008000", 0, 0 )] )
 
-define l = Character("Sr. Lobo", who_color="#000000ff")
-define sn = Character("Você")
-define nar = Character("você", what_italic=True)
+e5 "The what_outlines property puts an outline around the text."
+
+e5 "It's a little complicated since it takes a list with a tuple in it, with the tuple being four things in parenthesis, and the list the square brackets around them."
+
+e5 "The first number is the size of the outline, in pixels. That's followed by a string giving the hex-code of the color of the outline, and the x and y offsets."
+ 
+
+define l = Character("Sr. Lobo", who_color="#000000ff",who_outlines=[( 1, "#ffffff", 0, 0 )],what_color="#000000ff")
+define sn = Character("Você",who_color="#ffffffff",who_outlines=[( 1, "#000000", 0, 0 )],what_color="#000000ff",what_outlines=[( 0, "#808080", 2, 2 )])
+define nar = Character("Você",kind=sn,what_italic=True)
 define nvll = Character(what_italic=True, what_layout='subtitle', kind=nvl)
 
 transform halfsize:
@@ -39,9 +47,9 @@ label start:
     # add a file (named either "bg room.png" or "bg room.jpg") to the
     # images directory to show it.
 
-    "..."
+    nar "..."
 
-    "Olá?"
+    sn "Olá?"
 
     scene room with fade1
 
@@ -49,23 +57,23 @@ label start:
     # replace it by adding a file named "eileen happy.png" to the images
     # directory.
 
-    "Tem alguém aí?"
+    sn "Tem alguém aí?"
 
     menu:
         "Gritar":
-            "Socorrooooo!!!"
+            sn "Socorrooooo!!!"
 
     "..."
 
     menu:
         "Gritar novamente":
-            "Alguém aí tá me ouvindo? Eu não consido sair!"
+            sn "Alguém aí tá me ouvindo? Eu não consido sair!"
 
     "..."
 
     menu:
         "Gritar mais uma vez":
-            "ALGUÉM ME AJUDAAAAAA!!"
+            sn "ALGUÉM ME AJUDAAAAAA!!"
 
     
 
@@ -77,13 +85,13 @@ label start:
 
     # These display lines of dialogue.
 
-    "O que tá acontecendo? Quem é você?"
+    sn "O que tá acontecendo? Quem é você?"
 
-    "Como eu vim parar aqui?"
+    sn "Como eu vim parar aqui?"
 
-    "Por favor, me ajuda!"
+    sn "Por favor, me ajuda!"
 
-    "{cps=1}...{/cps}"
+    nar "{cps=1}...{/cps}"
 
     l "Pobre alma perdida."
 

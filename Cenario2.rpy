@@ -97,6 +97,12 @@ label Cenario2:
 
         nar "Parece que ele tem receio de que as coisas saiam errado nessa festa do chá"
 
+        sn "Por que esse evento é tão importante?"
+
+        l "Será um momento de interagir com velhos amigos, e aproveitar um bom chá."
+
+        l "Espero que se comporte."
+
         jump men
 
         label men:
@@ -104,15 +110,6 @@ label Cenario2:
             
                 
                 l "Você entendeu as regras, ou preciso repeti-las?"
-
-                "Por que esse evento é tão importante?":
-
-                    l "Será um momento de interagir com velhos amigos, e aproveitar um bom chá."
-
-                    l "Espero que se comporte."
-
-                    
-                    jump men
 
 
                 "Eu entendi":
