@@ -50,6 +50,10 @@ define config.has_sound = True
 define config.has_music = True
 define config.has_voice = True
 
+python:
+    _preferences.set_volume('music', 0.2)
+    renpy.restart_interaction()
+
 
 ## Para permitir que o usuário reproduza um som de teste no canal de som ou
 ## voz, descomente a linha abaixo e use-a para definir um som de amostra a ser
