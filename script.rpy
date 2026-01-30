@@ -40,7 +40,7 @@ label start:
 
     "Olá?"
 
-    scene bg room with fade1
+    scene room with fade1
 
     # This shows a character sprite. A placeholder is used, but you can
     # replace it by adding a file named "eileen happy.png" to the images
@@ -68,7 +68,7 @@ label start:
 
     show sr lobo at halfsize 
     with dissolve1
-        
+    play music "Childishly_fresh_eyes.mp3" fadein 5.0
 
 
     # These display lines of dialogue.
@@ -134,6 +134,8 @@ label start:
 
         "Sopa":
             l "Então venha comigo.{w=2}"
+
+            pause 2.0
             
             nar "Não acredito que estou aproveitando esse jantar"
 
@@ -142,9 +144,13 @@ label start:
         "Filé":
             l "Então venha comigo.{w=2}"
 
+            pause 2.0
+
             nar "Que carne dura, e que gosto estranho..."
 
             l "Fico feliz que tenha gostado da carne,"
+
+            stop music fadeout 2.0
             
             l "ao menos um bom uso para aquele imprestável que tentou sair sem permissão."
 
@@ -160,10 +166,14 @@ label start:
 
             l "Parece que ele ainda tenta fugir de seu dever. Deprimente."
 
+            play music "Childishly_fresh_eyes.mp3" fadein 5.0
+
             l "Espero que você não me dê tanta dor de cabeça assim."
 
         "Salada":
-            l "Então venha comigo.{w=2}"
+            l "Então venha comigo."
+
+            pause 2.0
 
             nar "Parece uma salada normal e decente."
 
@@ -183,13 +193,16 @@ label start:
     l "Não{w} me decepcione."
 
     hide sr lobo
-    with dissolve1
+    with dissolve
 
+    scene quarto
+    with fade1
     jump quarto
 
 
     default escolhida = set()
-    scene quarto
+    
+   
     label quarto:
         
         
@@ -244,15 +257,22 @@ label start:
             
             "Caixas acima do guarda-roupa":
 
+                play sound "caindo.mp3"
+
+                pause 2.0
+
                 nar "Esse barulho todo, só por roupas de cama velhas e ensanguentadas."
 
                 show sr lobo at halfsize
-                with dissolve
+                with dissolve1
 
                 l "Eu disse{p} Nada{w} de{w} barulho!!"
 
                 with vpunch
+                play sound "punch.mp3"
                 with Fade(0.2, 0.0, 0.8, color='#f70f0f')
+
+                $ stress = stress-2
 
                 l "Este é meu último aviso."
 
@@ -269,37 +289,9 @@ label start:
                 nar "Acho que só me resta dormir mesmo."
 
 
-    l "Parece que é isso" 
-        
+          
+      
 
-
-
-            
-
-
-    
- 
-
-
-
-
-
-
-
-    # with vpunch
-
-
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    # hide sr lobo
 
 
     jump Cenario2
