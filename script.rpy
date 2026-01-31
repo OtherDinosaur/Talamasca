@@ -210,25 +210,21 @@ label start:
     scene quarto
     
 
-
-    # Define the set to track clicks
     default escolhida = set()
 
     label quarto:
         scene quarto
         with fade1
 
-        # Optional: Logic to play narration only once
         if len(escolhida) == 0:
             nar "Posso explorar o ambiente..."
 
-    # --- THE MAIN LOOP ---
+
     label quarto_loop:
-        # This calls the screen and waits for the player to click
+
         call screen quarto_point_and_click
 
 
-    # --- OBJECT LOGIC BELOW ---
 
     label quarto_janela:
         nar "Tem uma janela ali..."
@@ -278,7 +274,7 @@ label start:
 
             "Não arriscar":
                 $ escolhida.add("Janela")
-                # We return to the click loop
+
                 jump quarto_loop
 
 
@@ -321,7 +317,6 @@ label start:
         l "Não serei tão educado da próxima vez."
         hide sr lobo with dissolve
 
-        # We add this to 'escolhida' so the button disappears in the screen logic
         $ escolhida.add("Caixas") 
         jump quarto_loop
 
@@ -332,18 +327,13 @@ label start:
         return
 
 
-
-
-
-    # This ends the game.
-
     label end_credits:
 
     scene black
     with fade1
     play music "ending.mp3" fadeout 3.0
     show screen credits
-    pause 60  # Adjust duration as needed
+    pause 60
     hide screen credits
     return
 
@@ -380,17 +370,14 @@ transform credits_scroll(speed):
 screen quarto_point_and_click():
     modal True 
 
-    # 1. WINDOW BUTTON
     imagebutton:
-        idle "janela_idle.png"    # Your image for the window
-        hover "janela_hover.png"  # Image when mouse is over it (optional)
-        xpos 0 ypos 0         # CHANGE THESE COORDINATES
-        focus_mask True           # Ignores transparent parts of the image
+        idle "janela_idle.png" 
+        hover "janela_hover.png"
+        xpos 0 ypos 0
+        focus_mask True
         action Jump("quarto_janela")
 
-    
 
-    # 3. PAINTING BUTTON
     imagebutton:
         idle "quadro_idle.png"
         hover "quadro_hover.png"
@@ -398,8 +385,6 @@ screen quarto_point_and_click():
         focus_mask True
         action Jump("quarto_quadro")
 
-    # 4. BOXES BUTTON
-    # We use 'if' so the button disappears after the boxes fall!
     if "Caixas" not in escolhida:
         imagebutton:
             idle "caixas_idle.png"
@@ -408,7 +393,6 @@ screen quarto_point_and_click():
             focus_mask True
             action Jump("quarto_caixas")
 
-    # 2. DOOR BUTTON
     imagebutton:
         idle "porta_idle.png"
         hover "porta_hover.png"
@@ -416,7 +400,6 @@ screen quarto_point_and_click():
         focus_mask True
         action Jump("quarto_porta")
 
-    # 5. BED BUTTON (To finish the scene)
     imagebutton:
         idle "cama_idle.png"
         hover "cama_hover.png"
