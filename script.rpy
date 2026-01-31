@@ -208,146 +208,128 @@ label start:
     with dissolve
 
     scene quarto
-    with fade1
-    jump quarto
+    
 
 
+    # Define the set to track clicks
     default escolhida = set()
-    
-   
+
     label quarto:
-        
-        
-    
-        menu:
-            set escolhida
+        scene quarto
+        with fade1
+
+        # Optional: Logic to play narration only once
+        if len(escolhida) == 0:
             nar "Posso explorar o ambiente..."
-            
-            "Janela":
-                menu:
-                    nar "Tem uma janela ali..."
-                    
-                    "Pular":
 
-                        stop music fadeout 2.0
+    # --- THE MAIN LOOP ---
+    label quarto_loop:
+        # This calls the screen and waits for the player to click
+        call screen quarto_point_and_click
 
-                        nar "Essa é minha chance, qualquer lugar é melhor que aqui"
 
-                        play sound "rack.mp3"
-                        play sound "slash.mp3"
-                        with fade3
-                        pause 2.0
+    # --- OBJECT LOGIC BELOW ---
 
-                        sn "AAAAAAAAARRRHHHHGGG!!"
-
-                        sn "Uma armadilha de urso!"
-
-                        show sr lobo at halfsize
-                        with dissolve
-
-                        l "Lamentável."
-
-                        l "Você falhou no teste mais ridículo."
-
-                        hide sr lobo
-                        with dissolve1
-
-                        play music "Childishly_fresh_eyes.mp3" fadein 5.0
-
-                        scene black
-                        with fade1
-
-                        nvll """Você não possui valor algum.
-
-                        O lobo achará outra presa,
-
-                        alguém mais digno.
-
-                        O culto continuará sem você.
-
-                        Mais sequestros, mais mortes, mais impunidade.
-
-                        Você poderia ter mudado isso,
-
-                        mas não fez as escolhas certas."""
-
-                     
-                        jump end_credits
-
-                    "Não arriscar":
-                        $ escolhida.add("Janela")
-                        jump quarto
-            
-            "Porta":
-
-                nar "Trancada. Que surpresa."
-                $ escolhida.add("Porta")
-                jump quarto
-
-            "Quadro":
-
+    label quarto_janela:
+        nar "Tem uma janela ali..."
+        
+        menu:
+            "Pular":
                 stop music fadeout 2.0
-
-                nar "Que figura psicodélica curiosa..."
-
-                play sound "creepy.mp3"
-
-                nar "..."
-
-                nar "Tá, não tô me sentindo bem... É melhor parar."
-
-                play music "Childishly_fresh_eyes.mp3" fadein 5.0
-                $ stress = stress-1
-
-                $ escolhida.add("Quadro")
-                jump quarto
-            
-            "Caixas acima do guarda-roupa":
-
-                play sound "caindo.mp3"
-
-                pause 2.0
-
-                nar "Esse barulho todo, só por roupas de cama velhas e ensanguentadas."
-
-                stop music fadeout 0.5
-
-                show sr lobo at halfsize
-                with dissolve1
-
-                l "Eu disse{p} Nada{w} de{w} barulho!!"
-
-                with vpunch
-                play sound "punch.mp3"
-                with fade3
-
-                $ stress = stress-2
-
-                play music "Childishly_fresh_eyes.mp3" fadein 5.0
-
-                l "Este é meu último aviso."
-
-                l "Não serei tão educado da próxima vez."
-
-                hide sr lobo
-                with dissolve
-
+                nar "Essa é minha chance, qualquer lugar é melhor que aqui"
                 
+                play sound "rack.mp3"
+                play sound "slash.mp3"
+                with fade3
+                pause 2.0
+                
+                sn "AAAAAAAAARRRHHHHGGG!!"
+                sn "Uma armadilha de urso!"
 
-                $ escolhida.add("Caixas acima do guarda-roupa")
-                jump quarto
+                show sr lobo at halfsize with dissolve
+                l "Lamentável."
+                l "Você falhou no teste mais ridículo."
+                hide sr lobo with dissolve1
 
-            "cama":
+                play music "Childishly_fresh_eyes.mp3" fadein 5.0
+                scene black with fade1
 
-                nar "Acho que só me resta dormir mesmo."
-
-
-          
-      
-
+                nvll """Você não possui valor algum.
 
 
-    jump Cenario2
+                O lobo achará outra presa,
+
+
+                alguém mais digno.
+
+
+                O culto continuará sem você.
+
+
+                Mais sequestros, mais mortes, mais impunidade.
+
+
+                Você poderia ter mudado isso,
+
+
+                mas não fez as escolhas certas."""
+
+                jump end_credits
+
+            "Não arriscar":
+                $ escolhida.add("Janela")
+                # We return to the click loop
+                jump quarto_loop
+
+
+    label quarto_porta:
+        nar "Trancada. Que surpresa."
+        $ escolhida.add("Porta")
+        jump quarto_loop
+
+
+    label quarto_quadro:
+        stop music fadeout 2.0
+        nar "Que figura psicodélica curiosa..."
+        play sound "creepy.mp3"
+        nar "..."
+        nar "Tá, não tô me sentindo bem... É melhor parar."
+        
+        play music "Childishly_fresh_eyes.mp3" fadein 5.0
+        $ stress = stress-1
+        $ escolhida.add("Quadro")
+        jump quarto_loop
+
+
+    label quarto_caixas:
+        play sound "caindo.mp3"
+        pause 2.0
+        nar "Esse barulho todo, só por roupas de cama velhas e ensanguentadas."
+        stop music fadeout 0.5
+
+        show sr lobo at halfsize with dissolve1
+        l "Eu disse{p} Nada{w} de{w} barulho!!"
+
+        with vpunch
+        play sound "punch.mp3"
+        with fade3
+
+        $ stress = stress-2
+        play music "Childishly_fresh_eyes.mp3" fadein 5.0
+
+        l "Este é meu último aviso."
+        l "Não serei tão educado da próxima vez."
+        hide sr lobo with dissolve
+
+        # We add this to 'escolhida' so the button disappears in the screen logic
+        $ escolhida.add("Caixas") 
+        jump quarto_loop
+
+
+    label quarto_cama:
+        nar "Acho que só me resta dormir mesmo."
+        jump Cenario2
+        return
 
 
 
@@ -393,3 +375,51 @@ screen credits:
 transform credits_scroll(speed):
     ypos 1000
     linear speed ypos -2600
+
+
+screen quarto_point_and_click():
+    modal True 
+
+    # 1. WINDOW BUTTON
+    imagebutton:
+        idle "janela_idle.png"    # Your image for the window
+        hover "janela_hover.png"  # Image when mouse is over it (optional)
+        xpos 0 ypos 0         # CHANGE THESE COORDINATES
+        focus_mask True           # Ignores transparent parts of the image
+        action Jump("quarto_janela")
+
+    
+
+    # 3. PAINTING BUTTON
+    imagebutton:
+        idle "quadro_idle.png"
+        hover "quadro_hover.png"
+        xpos 0 ypos 0
+        focus_mask True
+        action Jump("quarto_quadro")
+
+    # 4. BOXES BUTTON
+    # We use 'if' so the button disappears after the boxes fall!
+    if "Caixas" not in escolhida:
+        imagebutton:
+            idle "caixas_idle.png"
+            hover "caixas_hover.png"
+            xpos 0 ypos 0
+            focus_mask True
+            action Jump("quarto_caixas")
+
+    # 2. DOOR BUTTON
+    imagebutton:
+        idle "porta_idle.png"
+        hover "porta_hover.png"
+        xpos 0 ypos 0
+        focus_mask True
+        action Jump("quarto_porta")
+
+    # 5. BED BUTTON (To finish the scene)
+    imagebutton:
+        idle "cama_idle.png"
+        hover "cama_hover.png"
+        xpos 0 ypos 0
+        focus_mask True
+        action Jump("quarto_cama")
